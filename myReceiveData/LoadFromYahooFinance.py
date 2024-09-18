@@ -6,6 +6,7 @@
 import pandas as pd
 #import numpy as np
 import yfinance as yf
+import os
 
 
 from finrl.meta.preprocessor.yahoodownloader import YahooDownloader
@@ -21,7 +22,7 @@ TRAIN_END_DATE = '2019-01-01'
 TEST_START_DATE = '2019-01-01'
 TEST_END_DATE = '2024-09-07'
 
-Path = '.\\'
+PathData = '..\\Data'
 
 myTickerList = pd.DataFrame({'NamePartOfFileName': ['DOW_30_TICKER',
                                                     'NAS_100_TICKER',
@@ -58,11 +59,14 @@ myTickerList = pd.DataFrame({'NamePartOfFileName': ['DOW_30_TICKER',
 
 # загружаем данные
 
+if not os.path.isdir(PathData):
+    os.mkdir(PathData)
+
 
 CounterListDescription = 0
 
 while CounterListDescription < len(myTickerList):
-    FilePathName = Path + myTickerList.loc[CounterListDescription, 'NamePartOfFileName'] + '.csv'
+    FilePathName = PathData + '\\'+ myTickerList.loc[CounterListDescription, 'NamePartOfFileName'] + '.csv'
 #    FilePathName = Path + myTickerList.loc[CounterListDescription, 'NamePartOfFileName'] + '.xlsx'
     print(FilePathName)
     df = YahooDownloader(start_date=TRAIN_START_DATE,
